@@ -1,0 +1,110 @@
+.toastwrite-editor-md-strong,
+.toastwrite-editor-md-list-item-style,
+.toastwrite-editor-md-list-item .toastwrite-editor-md-meta {
+  font-weight: bold;
+}
+
+.toastwrite-editor-md-emph {
+  font-style: italic;
+}
+
+.toastwrite-editor-md-strike {
+  text-decoration: line-through;
+}
+
+.toastwrite-editor-md-strike.toastwrite-editor-md-delimiter {
+  text-decoration: none;
+}
+
+.toastwrite-editor-md-delimiter,
+.toastwrite-editor-md-link,
+.toastwrite-editor-md-table {
+  color: #ccc;
+}
+
+.toastwrite-editor-md-table .toastwrite-editor-md-table-cell {
+  color: #222;
+}
+
+.toastwrite-editor-md-meta,
+.toastwrite-editor-md-link.toastwrite-editor-md-link-url.toastwrite-editor-md-marked-text {
+  color: #999;
+}
+
+.toastwrite-editor-md-link.toastwrite-editor-md-link-desc.toastwrite-editor-md-marked-text,
+.toastwrite-editor-md-list-item-style.toastwrite-editor-md-list-item-odd {
+  color: #4b96e6;
+}
+
+.toastwrite-editor-md-list-item-style.toastwrite-editor-md-list-item-even {
+  color: #cb4848;
+}
+
+.toastwrite-editor-md-blockquote-marker {
+  color: #079f3f;
+  font-weight: bold;
+}
+
+.toastwrite-editor-md-html-tag {
+  color: #079f3f;
+}
+
+.toastwrite-editor-md-html-attr {
+  color: #4b96e6;
+}
+
+.toastwrite-editor-md-html-attr-value {
+  color: #c1798b;
+}
+
+.toastwrite-editor-md-code.toastwrite-editor-md-delimiter {
+  color: #aaa;
+}
+
+.toastwrite-editor-md-code.toastwrite-editor-md-marked-text {
+  color: #c1798b;
+}
+
+.toastwrite-editor-md-code {
+  background-color: rgba(243, 229, 233, 0.5);
+  padding: 2px 0;
+  letter-spacing: -0.3px;
+}
+
+.toastwrite-editor-md-code.toastwrite-editor-md-start {
+  padding-left: 2px;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+}
+
+.toastwrite-editor-md-code.toastwrite-editor-md-end {
+  padding-right: 2px;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+
+.toastwrite-editor-md-code-block-line-background {
+  background-color: #f5f7f8;
+}
+
+.toastwrite-editor-md-code-block-line-background.start {
+  margin-top: 2px;
+}
+
+.toastwrite-editor-md-code,
+.toastwrite-editor-md-code-block {
+  font-family: Consolas, Courier, 'Lucida Grande', ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+}
+
+.toastwrite-editor-theme-dark .toastwrite-editor-md-delimiter,
+.toastwrite-editor-theme-dark .toastwrite-editor-md-link {
+  color: #6b7280;
+}
+
+.toastwrite-editor-theme-dark .toastwrite-editor-md-code-block-line-background {
+  background-color: #1f2937;
+}
+
+.toastwrite-editor-theme-dark .toastwrite-editor-md-code {
+  background-color: rgba(193, 121, 139, 0.15);
+}

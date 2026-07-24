@@ -1,0 +1,56 @@
+{
+  "name": "@toastwrite/parser",
+  "version": "1.0.0-alpha.1",
+  "description": "Incremental CommonMark/GFM markdown parser for @toastwrite/editor",
+  "type": "module",
+  "license": "MIT",
+  "author": "toastwrite contributors",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/toastwrite/editor.git",
+    "directory": "packages/parser"
+  },
+  "bugs": {
+    "url": "https://github.com/toastwrite/editor/issues"
+  },
+  "homepage": "https://github.com/toastwrite/editor#readme",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./types/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./types/index.d.ts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "files": [
+    "dist",
+    "types"
+  ],
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch",
+    "test": "vitest",
+    "test:ci": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint src types",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "entities": "^2.2.0",
+    "mdurl": "^1.0.1"
+  },
+  "devDependencies": {
+    "@types/codemirror": "5.60.5",
+    "codemirror": "^5.65.16",
+    "common-tags": "^1.8.2",
+    "vite": "^6.3.5",
+    "vitest": "^3.2.1"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "name": "@toastwrite/editor",
+  "version": "1.0.0-alpha.1",
+  "description": "Modern GFM Markdown editor",
+  "type": "module",
+  "license": "MIT",
+  "author": "toastwrite contributors",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/toastwrite/editor.git",
+    "directory": "packages/editor"
+  },
+  "bugs": {
+    "url": "https://github.com/toastwrite/editor/issues"
+  },
+  "homepage": "https://github.com/toastwrite/editor#readme",
+  "engines": {
+    "node": ">=22"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./style.css": {
+      "types": "./style.css.d.ts",
+      "default": "./dist/toastwrite-editor.css"
+    }
+  },
+  "files": ["dist", "style.css.d.ts"],
+  "scripts": {
+    "build": "vite build && tsc -p tsconfig.build.json --emitDeclarationOnly",
+    "dev": "vite build --watch",
+    "test": "vitest",
+    "test:ci": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint src",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@toastwrite/parser": "workspace:*",
+    "dompurify": "^3.2.6",
+    "prosemirror-commands": "^1.7.1",
+    "prosemirror-history": "^1.4.1",
+    "prosemirror-keymap": "^1.2.3",
+    "prosemirror-model": "^1.25.1",
+    "prosemirror-state": "^1.4.3",
+    "prosemirror-view": "^1.39.2"
+  },
+  "devDependencies": {
+    "@types/dompurify": "^3.2.0",
+    "@types/node": "^22.15.21",
+    "jsdom": "^26.1.0",
+    "vite": "^6.3.5",
+    "vitest": "^3.2.1"
+  }
+}

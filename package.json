@@ -1,0 +1,39 @@
+{
+  "name": "toastwrite-monorepo",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Modern monorepo for @toastwrite/editor",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/toastwrite/editor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/toastwrite/editor/issues"
+  },
+  "homepage": "https://github.com/toastwrite/editor#readme",
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "pnpm@10.12.1",
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild"]
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "test": "turbo run test",
+    "test:ci": "turbo run test:ci",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "clean": "turbo run clean && rm -rf node_modules"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.28.0",
+    "eslint": "^9.28.0",
+    "prettier": "^3.5.3",
+    "turbo": "^2.5.4",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.33.1"
+  }
+}

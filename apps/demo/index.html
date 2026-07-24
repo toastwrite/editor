@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@toastwrite/editor demo</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: system-ui, sans-serif;
+        background: #f3f4f6;
+      }
+
+      main {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 24px;
+      }
+
+      h1 {
+        margin: 0 0 8px;
+      }
+
+      p {
+        margin: 0 0 24px;
+        color: #4b5563;
+      }
+
+      .grid {
+        display: grid;
+        gap: 24px;
+      }
+
+      .panel {
+        background: #fff;
+        border-radius: 12px;
+        padding: 16px;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      }
+
+      #editor-root,
+      #viewer-root {
+        height: 420px;
+      }
+
+      #viewer-root .toastwrite-editor-viewer {
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>@toastwrite/editor</h1>
+      <p>Modern rewrite — Node 22+, pnpm workspaces, Turborepo, Vite, Vitest.</p>
+
+      <div class="grid">
+        <section class="panel">
+          <h2>Editor</h2>
+          <div id="editor-root"></div>
+        </section>
+
+        <section class="panel">
+          <h2>Viewer</h2>
+          <div id="viewer-root"></div>
+        </section>
+      </div>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
