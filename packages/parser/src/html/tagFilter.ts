@@ -4,6 +4,7 @@ const disallowedTags = [
   'style',
   'xmp',
   'iframe',
+  'input',
   'noembed',
   'noframes',
   'script',
