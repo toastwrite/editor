@@ -76,7 +76,7 @@ export function createHeadingDropdown({
   };
 
   const onTriggerClick = (): void => {
-    setOpen(menu.hidden);
+    setOpen(Boolean(menu.hidden));
   };
 
   const itemClickHandlers = menuItems.map(({ commandId, item }) => {
