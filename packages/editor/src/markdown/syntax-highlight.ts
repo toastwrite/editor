@@ -350,66 +350,11 @@ function highlightHtml(ranges: HighlightRange[], lineStart: number, line: string
   });
 }
 
-function highlightParagraph(
-  doc: ProseMirrorNode,
-  index: number,
+function highlightNormalLine(
   ranges: HighlightRange[],
-  paragraphUpdates: ParagraphUpdate[]
+  lineStart: number,
+  line: string
 ): void {
-  const node = doc.child(index);
-  const line = node.textContent;
-  const lineStart = getParagraphContentStart(doc, index);
-  const background = node.attrs.lineBackground as string | null;
-  const fenceMatch = line.match(RE_FENCE);
-
-  if (background?.includes('code-block')) {
-    if (fenceMatch && background.includes('start')) {
-      const [, fence, info] = fenceMatch;
-      const fenceEnd = lineStart + fence.length;
-      addRange(ranges, lineStart, fenceEnd, schema.marks.delimiter.create());
-
-      if (info) {
-        addRange(ranges, fenceEnd, lineStart + line.length, schema.marks.meta.create());
-      }
-
-      paragraphUpdates.push({ index, lineBackground: 'code-block-line-background start' });
-      return;
-    }
-
-    if (fenceMatch) {
-      addRange(ranges, lineStart, lineStart + fenceMatch[1].length, schema.marks.delimiter.create());
-      paragraphUpdates.push({ index, lineBackground: 'code-block-line-background' });
-      return;
-    }
-
-    if (line.length > 0) {
-      addRange(ranges, lineStart, lineStart + line.length, schema.marks.codeBlock.create());
-    }
-
-    paragraphUpdates.push({
-      index,
-      lineBackground: background.includes('start')
-        ? 'code-block-line-background start'
-        : 'code-block-line-background',
-    });
-    return;
-  }
-
-  if (fenceMatch) {
-    const [, fence, info] = fenceMatch;
-    const fenceEnd = lineStart + fence.length;
-    addRange(ranges, lineStart, fenceEnd, schema.marks.delimiter.create());
-
-    if (info) {
-      addRange(ranges, fenceEnd, lineStart + line.length, schema.marks.meta.create());
-    }
-
-    paragraphUpdates.push({ index, lineBackground: 'code-block-line-background start' });
-    return;
-  }
-
-  paragraphUpdates.push({ index, lineBackground: null });
-
   const isTableLine = highlightTableLine(ranges, lineStart, line);
 
   if (!isTableLine) {
@@ -429,36 +374,24 @@ function computeHighlights(doc: ProseMirrorNode, targetIndices?: Set<number>): {
 } {
   const ranges: HighlightRange[] = [];
   const paragraphUpdates: ParagraphUpdate[] = [];
-
-  if (targetIndices) {
-    [...targetIndices]
-      .sort((left, right) => left - right)
-      .forEach((index) => {
-        if (index < 0 || index >= doc.childCount) {
-          return;
-        }
-
-        highlightParagraph(doc, index, ranges, paragraphUpdates);
-      });
-
-    return { ranges, paragraphUpdates };
-  }
-
   let inCodeBlock = false;
   let codeBlockStartIndex = -1;
 
   doc.forEach((node, _offset, index) => {
+    const shouldHighlight = !targetIndices || targetIndices.has(index);
     const line = node.textContent;
     const lineStart = getParagraphContentStart(doc, index);
     const fenceMatch = line.match(RE_FENCE);
 
     if (!inCodeBlock && fenceMatch) {
-      const [, fence, info] = fenceMatch;
-      const fenceEnd = lineStart + fence.length;
-      addRange(ranges, lineStart, fenceEnd, schema.marks.delimiter.create());
+      if (shouldHighlight) {
+        const [, fence, info] = fenceMatch;
+        const fenceEnd = lineStart + fence.length;
+        addRange(ranges, lineStart, fenceEnd, schema.marks.delimiter.create());
 
-      if (info) {
-        addRange(ranges, fenceEnd, lineStart + line.length, schema.marks.meta.create());
+        if (info) {
+          addRange(ranges, fenceEnd, lineStart + line.length, schema.marks.meta.create());
+        }
       }
 
       inCodeBlock = true;
@@ -469,24 +402,40 @@ function computeHighlights(doc: ProseMirrorNode, targetIndices?: Set<number>): {
 
     if (inCodeBlock) {
       if (fenceMatch && index > codeBlockStartIndex) {
-        addRange(ranges, lineStart, lineStart + fenceMatch[1].length, schema.marks.delimiter.create());
+        if (shouldHighlight) {
+          addRange(
+            ranges,
+            lineStart,
+            lineStart + fenceMatch[1].length,
+            schema.marks.delimiter.create()
+          );
+        }
+
         paragraphUpdates.push({ index, lineBackground: 'code-block-line-background' });
         inCodeBlock = false;
         codeBlockStartIndex = -1;
         return;
       }
 
-      if (line.length > 0) {
+      if (shouldHighlight && line.length > 0) {
         addRange(ranges, lineStart, lineStart + line.length, schema.marks.codeBlock.create());
       }
+
       paragraphUpdates.push({
         index,
-        lineBackground: index === codeBlockStartIndex ? 'code-block-line-background start' : 'code-block-line-background',
+        lineBackground:
+          index === codeBlockStartIndex
+            ? 'code-block-line-background start'
+            : 'code-block-line-background',
       });
       return;
     }
 
-    highlightParagraph(doc, index, ranges, paragraphUpdates);
+    paragraphUpdates.push({ index, lineBackground: null });
+
+    if (shouldHighlight) {
+      highlightNormalLine(ranges, lineStart, line);
+    }
   });
 
   return { ranges, paragraphUpdates };

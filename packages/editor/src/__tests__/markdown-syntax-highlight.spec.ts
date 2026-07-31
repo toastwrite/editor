@@ -1,8 +1,12 @@
+import type { EditResult } from '@toastwrite/parser';
 import { describe, expect, it } from 'vitest';
 import { DOMSerializer } from 'prosemirror-model';
 import { EditorState } from 'prosemirror-state';
 import { markdownLineSchema as schema } from '../markdown/schema.js';
-import { applySyntaxHighlight } from '../markdown/syntax-highlight.js';
+import {
+  applySyntaxHighlight,
+  applySyntaxHighlightForEditResults,
+} from '../markdown/syntax-highlight.js';
 import { markdownToDoc } from '../markdown/doc-bridge.js';
 
 describe('markdown syntax highlight', () => {
@@ -83,6 +87,24 @@ describe('markdown syntax highlight', () => {
     expect(html).toContain('toastwrite-editor-md-html-tag');
     expect(html).toContain('toastwrite-editor-md-html-attr');
     expect(html).toContain('toastwrite-editor-md-html-attr-value');
+  });
+
+  it('applies code block background to interior lines during incremental highlight', () => {
+    const doc = markdownToDoc('```js\nconst x = 1');
+    const state = EditorState.create({ doc, schema });
+    const tr = applySyntaxHighlightForEditResults(state, [
+      {
+        nodes: [{ sourcepos: [[2, 1], [2, 12]] } as EditResult['nodes'][number]],
+        removedNodeRange: null,
+      },
+    ]);
+
+    expect(tr).toBeTruthy();
+
+    const nextState = state.apply(tr!);
+
+    expect(nextState.doc.child(0).attrs.lineBackground).toContain('code-block-line-background');
+    expect(nextState.doc.child(1).attrs.lineBackground).toBe('code-block-line-background');
   });
 
   it('styles link parentheses as delimiters, not as url text', () => {
