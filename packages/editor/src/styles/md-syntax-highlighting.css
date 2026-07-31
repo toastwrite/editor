@@ -33,7 +33,7 @@
 
 .toastwrite-editor-md-link.toastwrite-editor-md-link-desc.toastwrite-editor-md-marked-text,
 .toastwrite-editor-md-list-item-style.toastwrite-editor-md-list-item-odd {
-  color: #4b96e6;
+  color: var(--toastwrite-primary, #19647e);
 }
 
 .toastwrite-editor-md-list-item-style.toastwrite-editor-md-list-item-even {
@@ -50,7 +50,7 @@
 }
 
 .toastwrite-editor-md-html-attr {
-  color: #4b96e6;
+  color: var(--toastwrite-primary, #19647e);
 }
 
 .toastwrite-editor-md-html-attr-value {

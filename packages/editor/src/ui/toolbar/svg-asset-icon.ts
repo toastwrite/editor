@@ -1,6 +1,46 @@
 const SVG_NS = 'http://www.w3.org/2000/svg';
 const ICON_SIZE = 20;
 
+const SOLID_ICON_COLORS = new Set([
+  '#000',
+  '#000000',
+  'black',
+  '#111',
+  '#111111',
+  '#222',
+  '#222222',
+  '#333',
+  '#333333',
+  '#444',
+  '#444444',
+]);
+
+function isSolidIconColor(color: string | null): boolean {
+  if (!color) {
+    return false;
+  }
+
+  return SOLID_ICON_COLORS.has(color.trim().toLowerCase());
+}
+
+function normalizeSvgColors(svg: SVGSVGElement): void {
+  svg.querySelectorAll('image').forEach((element) => {
+    element.classList.add('toastwrite-editor-toolbar-icon-raster');
+  });
+
+  svg.querySelectorAll('path, rect, circle, ellipse, polygon, polyline, line, text').forEach((element) => {
+    const fill = element.getAttribute('fill');
+    if (fill && fill !== 'none' && fill !== 'currentColor' && isSolidIconColor(fill)) {
+      element.setAttribute('fill', 'currentColor');
+    }
+
+    const stroke = element.getAttribute('stroke');
+    if (stroke && stroke !== 'none' && stroke !== 'currentColor' && isSolidIconColor(stroke)) {
+      element.setAttribute('stroke', 'currentColor');
+    }
+  });
+}
+
 export function createSvgFromAsset(rawSvg: string): SVGSVGElement {
   const doc = new DOMParser().parseFromString(rawSvg.trim(), 'image/svg+xml');
   const source = doc.documentElement;
@@ -24,6 +64,8 @@ export function createSvgFromAsset(rawSvg: string): SVGSVGElement {
   for (const child of Array.from(source.childNodes)) {
     svg.appendChild(child.cloneNode(true));
   }
+
+  normalizeSvgColors(svg);
 
   return svg;
 }

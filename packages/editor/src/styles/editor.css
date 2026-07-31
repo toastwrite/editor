@@ -1,5 +1,10 @@
 .toastwrite-editor,
 .toastwrite-editor-viewer {
+  --toastwrite-primary: #19647e;
+  --toastwrite-primary-hover: #145266;
+  --toastwrite-primary-light-bg: #e8f3f6;
+  --toastwrite-primary-light-border: #b5d4de;
+  --toastwrite-primary-muted: #6db3c9;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -24,6 +29,9 @@
 }
 
 .toastwrite-editor-theme-dark {
+  --toastwrite-primary-light-bg: rgba(25, 100, 126, 0.22);
+  --toastwrite-primary-light-border: rgba(109, 179, 201, 0.45);
+  --toastwrite-primary-muted: #8ecfe0;
   color: #f3f4f6;
   background: #111827;
   border-color: #374151;
@@ -166,7 +174,7 @@
 
 .toastwrite-editor-toolbar-heading-item:hover,
 .toastwrite-editor-toolbar-heading-item:focus-visible {
-  background: #f3f4f6;
+  background: var(--toastwrite-primary-light-bg);
 }
 
 .toastwrite-editor-toolbar-heading-item:disabled {
@@ -190,7 +198,7 @@
 
 .toastwrite-editor-theme-dark .toastwrite-editor-toolbar-heading-item:hover,
 .toastwrite-editor-theme-dark .toastwrite-editor-toolbar-heading-item:focus-visible {
-  background: #374151;
+  background: var(--toastwrite-primary-light-bg);
 }
 
 .toastwrite-editor-toolbar-scroll-sync {
@@ -240,7 +248,7 @@
 }
 
 .toastwrite-editor-toolbar-switch.is-on {
-  background: #2563eb;
+  background: var(--toastwrite-primary);
 }
 
 .toastwrite-editor-toolbar-switch.is-on::after {
@@ -264,7 +272,7 @@
 }
 
 .toastwrite-editor-theme-dark .toastwrite-editor-toolbar-switch.is-on {
-  background: #3b82f6;
+  background: var(--toastwrite-primary-muted);
 }
 
 .toastwrite-editor-toolbar-group {
@@ -313,16 +321,44 @@
   height: 20px;
 }
 
+.toastwrite-editor-toolbar-icon-raster {
+  filter: brightness(0) saturate(100%);
+  opacity: 0.67;
+}
+
 .toastwrite-editor-toolbar-button:hover:not(:disabled),
 .toastwrite-editor-toolbar-button:focus-visible:not(:disabled) {
-  background: #fff;
-  border-color: #d1d5db;
+  background: var(--toastwrite-primary-light-bg);
+  border-color: var(--toastwrite-primary-light-border);
+}
+
+.toastwrite-editor-toolbar-button:hover:not(:disabled) .toastwrite-editor-toolbar-icon,
+.toastwrite-editor-toolbar-button:focus-visible:not(:disabled) .toastwrite-editor-toolbar-icon,
+.toastwrite-editor-toolbar-button:active:not(:disabled) .toastwrite-editor-toolbar-icon,
+.toastwrite-editor-toolbar-button.active .toastwrite-editor-toolbar-icon {
+  color: var(--toastwrite-primary);
+}
+
+.toastwrite-editor-toolbar-button:hover:not(:disabled) .toastwrite-editor-toolbar-icon-raster,
+.toastwrite-editor-toolbar-button:focus-visible:not(:disabled) .toastwrite-editor-toolbar-icon-raster,
+.toastwrite-editor-toolbar-button:active:not(:disabled) .toastwrite-editor-toolbar-icon-raster,
+.toastwrite-editor-toolbar-button.active .toastwrite-editor-toolbar-icon-raster {
+  opacity: 1;
+  filter: brightness(0) saturate(100%) invert(32%) sepia(47%) saturate(847%) hue-rotate(152deg)
+    brightness(91%) contrast(89%);
+}
+
+.toastwrite-editor-toolbar-button:hover:not(:disabled) .toastwrite-editor-toolbar-heading-chevron,
+.toastwrite-editor-toolbar-button:focus-visible:not(:disabled) .toastwrite-editor-toolbar-heading-chevron,
+.toastwrite-editor-toolbar-button:active:not(:disabled) .toastwrite-editor-toolbar-heading-chevron,
+.toastwrite-editor-toolbar-button.active .toastwrite-editor-toolbar-heading-chevron {
+  color: var(--toastwrite-primary);
 }
 
 .toastwrite-editor-toolbar-button:active:not(:disabled),
 .toastwrite-editor-toolbar-button.active {
-  background: #fff;
-  border-color: #9ca3af;
+  background: var(--toastwrite-primary-light-bg);
+  border-color: var(--toastwrite-primary);
 }
 
 .toastwrite-editor-toolbar-button:disabled {
@@ -344,16 +380,41 @@
 
 .toastwrite-editor-theme-dark .toastwrite-editor-toolbar-button:hover:not(:disabled),
 .toastwrite-editor-theme-dark .toastwrite-editor-toolbar-button:focus-visible:not(:disabled) {
-  background: #fff;
-  border-color: #9ca3af;
-  color: #444;
+  background: var(--toastwrite-primary-light-bg);
+  border-color: var(--toastwrite-primary-light-border);
+}
+
+.toastwrite-editor-theme-dark .toastwrite-editor-toolbar-button:hover:not(:disabled) .toastwrite-editor-toolbar-icon,
+.toastwrite-editor-theme-dark .toastwrite-editor-toolbar-button:focus-visible:not(:disabled) .toastwrite-editor-toolbar-icon,
+.toastwrite-editor-theme-dark .toastwrite-editor-toolbar-button:active:not(:disabled) .toastwrite-editor-toolbar-icon,
+.toastwrite-editor-theme-dark .toastwrite-editor-toolbar-button.active .toastwrite-editor-toolbar-icon {
+  color: var(--toastwrite-primary-muted);
+}
+
+.toastwrite-editor-theme-dark .toastwrite-editor-toolbar-icon-raster {
+  opacity: 0.82;
+}
+
+.toastwrite-editor-theme-dark .toastwrite-editor-toolbar-button:hover:not(:disabled) .toastwrite-editor-toolbar-icon-raster,
+.toastwrite-editor-theme-dark .toastwrite-editor-toolbar-button:focus-visible:not(:disabled) .toastwrite-editor-toolbar-icon-raster,
+.toastwrite-editor-theme-dark .toastwrite-editor-toolbar-button:active:not(:disabled) .toastwrite-editor-toolbar-icon-raster,
+.toastwrite-editor-theme-dark .toastwrite-editor-toolbar-button.active .toastwrite-editor-toolbar-icon-raster {
+  opacity: 1;
+  filter: brightness(0) saturate(100%) invert(78%) sepia(21%) saturate(567%) hue-rotate(152deg)
+    brightness(95%) contrast(89%);
+}
+
+.toastwrite-editor-theme-dark .toastwrite-editor-toolbar-button:hover:not(:disabled) .toastwrite-editor-toolbar-heading-chevron,
+.toastwrite-editor-theme-dark .toastwrite-editor-toolbar-button:focus-visible:not(:disabled) .toastwrite-editor-toolbar-heading-chevron,
+.toastwrite-editor-theme-dark .toastwrite-editor-toolbar-button:active:not(:disabled) .toastwrite-editor-toolbar-heading-chevron,
+.toastwrite-editor-theme-dark .toastwrite-editor-toolbar-button.active .toastwrite-editor-toolbar-heading-chevron {
+  color: var(--toastwrite-primary-muted);
 }
 
 .toastwrite-editor-theme-dark .toastwrite-editor-toolbar-button:active:not(:disabled),
 .toastwrite-editor-theme-dark .toastwrite-editor-toolbar-button.active {
-  background: #fff;
-  border-color: #6b7280;
-  color: #444;
+  background: var(--toastwrite-primary-light-bg);
+  border-color: var(--toastwrite-primary-muted);
 }
 
 .toastwrite-editor-theme-dark .toastwrite-editor-toolbar {
@@ -395,7 +456,7 @@
 }
 
 .toastwrite-editor-link-popup-input:focus {
-  outline: 1px solid #00a9ff;
+  outline: 1px solid var(--toastwrite-primary);
   border-color: transparent;
 }
 
@@ -438,12 +499,12 @@
 
 .toastwrite-editor-link-popup-ok {
   border: 0;
-  background: #00a9ff;
+  background: var(--toastwrite-primary);
   color: #fff;
 }
 
 .toastwrite-editor-link-popup-ok:hover {
-  background: #009bf2;
+  background: var(--toastwrite-primary-hover);
 }
 
 .toastwrite-editor-theme-dark .toastwrite-editor-link-popup {
@@ -512,8 +573,8 @@
 }
 
 .toastwrite-editor-image-popup-tab.active {
-  color: #00a9ff;
-  border-bottom: 2px solid #00a9ff;
+  color: var(--toastwrite-primary);
+  border-bottom: 2px solid var(--toastwrite-primary);
 }
 
 .toastwrite-editor-image-popup-label {
@@ -535,7 +596,7 @@
 }
 
 .toastwrite-editor-image-popup-input:focus {
-  outline: 1px solid #00a9ff;
+  outline: 1px solid var(--toastwrite-primary);
   border-color: transparent;
 }
 
@@ -633,12 +694,12 @@
 
 .toastwrite-editor-image-popup-ok {
   border: 0;
-  background: #00a9ff;
+  background: var(--toastwrite-primary);
   color: #fff;
 }
 
 .toastwrite-editor-image-popup-ok:hover {
-  background: #009bf2;
+  background: var(--toastwrite-primary-hover);
 }
 
 .toastwrite-editor-theme-dark .toastwrite-editor-image-popup {
@@ -653,8 +714,8 @@
 }
 
 .toastwrite-editor-theme-dark .toastwrite-editor-image-popup-tab.active {
-  color: #38bdf8;
-  border-bottom-color: #38bdf8;
+  color: var(--toastwrite-primary-muted);
+  border-bottom-color: var(--toastwrite-primary-muted);
 }
 
 .toastwrite-editor-theme-dark .toastwrite-editor-image-popup-label {
@@ -717,26 +778,26 @@
 
 .toastwrite-editor-table-popup-cell:hover,
 .toastwrite-editor-table-popup-cell.is-selected {
-  background: #d6ebff;
+  background: var(--toastwrite-primary-light-bg);
 }
 
 .toastwrite-editor-table-popup-cell.is-selection-top {
-  border-top-color: #4b96e6;
+  border-top-color: var(--toastwrite-primary);
   border-top-width: 2px;
 }
 
 .toastwrite-editor-table-popup-cell.is-selection-bottom {
-  border-bottom-color: #4b96e6;
+  border-bottom-color: var(--toastwrite-primary);
   border-bottom-width: 2px;
 }
 
 .toastwrite-editor-table-popup-cell.is-selection-left {
-  border-left-color: #4b96e6;
+  border-left-color: var(--toastwrite-primary);
   border-left-width: 2px;
 }
 
 .toastwrite-editor-table-popup-cell.is-selection-right {
-  border-right-color: #4b96e6;
+  border-right-color: var(--toastwrite-primary);
   border-right-width: 2px;
 }
 
@@ -761,7 +822,7 @@
 
 .toastwrite-editor-theme-dark .toastwrite-editor-table-popup-cell:hover,
 .toastwrite-editor-theme-dark .toastwrite-editor-table-popup-cell.is-selected {
-  background: rgba(75, 150, 230, 0.25);
+  background: var(--toastwrite-primary-light-bg);
 }
 
 .toastwrite-editor-theme-dark .toastwrite-editor-table-popup-label {
@@ -1084,7 +1145,7 @@ body.toastwrite-editor-md-split-dragging * {
 
 .toastwrite-editor-tabs button.active {
   font-weight: 700;
-  border-bottom: 2px solid #2563eb;
+  border-bottom: 2px solid var(--toastwrite-primary);
 }
 
 .toastwrite-editor-contents h1,
