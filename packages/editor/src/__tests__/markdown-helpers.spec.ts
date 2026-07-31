@@ -76,9 +76,41 @@ describe('markdown helpers', () => {
   it('inserts a gfm table template', () => {
     const result = insertMarkdownTable('Hello', { start: 5, end: 5 });
 
-    expect(result.value).toContain('| Header 1 | Header 2 | Header 3 |');
+    expect(result.value).toContain('|  |  |  |');
     expect(result.value).toContain('| --- | --- | --- |');
-    expect(result.value).toContain('| Cell 1-1 | Cell 1-2 | Cell 1-3 |');
+    expect(result.value).toBe(
+      'Hello\n\n|  |  |  |\n| --- | --- | --- |\n|  |  |  |\n|  |  |  |\n\n\n'
+    );
+    expect(result.selection).toEqual({ start: 9, end: 9 });
+  });
+
+  it('inserts a table at the start of the document without a leading blank line', () => {
+    const result = insertMarkdownTable('Hello', { start: 0, end: 0 });
+
+    expect(result.value.startsWith('|  |  |  |')).toBe(true);
+    expect(result.value).not.toMatch(/^\n/);
+    expect(result.selection).toEqual({ start: 2, end: 2 });
+  });
+
+  it('inserts a table after an empty line without adding another blank line', () => {
+    const result = insertMarkdownTable('Hello\n\n', { start: 7, end: 7 });
+
+    expect(result.value).toBe(
+      'Hello\n\n|  |  |  |\n| --- | --- | --- |\n|  |  |  |\n|  |  |  |\n\n\n'
+    );
+  });
+
+  it('inserts a blank line before a table when starting on a new line after content', () => {
+    const result = insertMarkdownTable('Hello\n', { start: 6, end: 6 });
+
+    expect(result.value.startsWith('Hello\n\n|  |  |  |')).toBe(true);
+  });
+
+  it('splits inline content onto the next line before inserting a table', () => {
+    const result = insertMarkdownTable('Hello world', { start: 5, end: 5 });
+
+    expect(result.value.startsWith('Hello\n\n|  |  |  |')).toBe(true);
+    expect(result.value).toContain('|  |  |  |\n\n\n world');
   });
 
   it('creates a new list item on enter inside a list', () => {

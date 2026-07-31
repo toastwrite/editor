@@ -6,6 +6,7 @@ import type { CommandId } from '../commands/types.js';
 import type { PreviewStyle } from '../types.js';
 import { createImagePopup } from './toolbar/create-image-popup.js';
 import { createLinkPopup } from './toolbar/create-link-popup.js';
+import { createTablePopup } from './toolbar/create-table-popup.js';
 import { createToolbar } from './toolbar/create-toolbar.js';
 
 export interface CommandControllerOptions {
@@ -22,6 +23,7 @@ export interface CommandControllerOptions {
   onInsertLink: (url: string, linkText: string) => boolean;
   getImagePopupInitialValues: () => ImagePopupInitialValues;
   onInsertImage: (url: string, altText: string) => boolean;
+  onInsertTable: (rows: number, cols: number) => boolean;
 }
 
 export interface CommandController {
@@ -42,6 +44,7 @@ export function createCommandController({
   onInsertLink,
   getImagePopupInitialValues,
   onInsertImage,
+  onInsertTable,
 }: CommandControllerOptions): CommandController {
   const { commands, showScrollSync, showHeadingDropdown } = resolveToolbarConfig(toolbarItems);
 
@@ -50,6 +53,8 @@ export function createCommandController({
   let linkPopup: ReturnType<typeof createLinkPopup>;
   // eslint-disable-next-line prefer-const -- assigned after toolbar initialization
   let imagePopup: ReturnType<typeof createImagePopup>;
+  // eslint-disable-next-line prefer-const -- assigned after toolbar initialization
+  let tablePopup: ReturnType<typeof createTablePopup>;
 
   const toolbar = createToolbar({
     mount: toolbarEl,
@@ -62,6 +67,9 @@ export function createCommandController({
     },
     onImageClick: (trigger) => {
       imagePopup.open(trigger, getImagePopupInitialValues());
+    },
+    onTableClick: (trigger) => {
+      tablePopup.open(trigger);
     },
     canExecute,
     headingDropdown: showHeadingDropdown,
@@ -89,8 +97,15 @@ export function createCommandController({
     },
   });
 
+  tablePopup = createTablePopup({
+    mount: toolbarEl,
+    onSubmit: (rows, cols) => {
+      onInsertTable(rows, cols);
+    },
+  });
+
   const onShortcut = (event: KeyboardEvent): void => {
-    if (linkPopup.isOpen() || imagePopup.isOpen()) {
+    if (linkPopup.isOpen() || imagePopup.isOpen() || tablePopup.isOpen()) {
       return;
     }
 
@@ -126,6 +141,7 @@ export function createCommandController({
       toolbar.destroy();
       linkPopup.destroy();
       imagePopup.destroy();
+      tablePopup.destroy();
     },
   };
 }

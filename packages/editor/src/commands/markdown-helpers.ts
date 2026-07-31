@@ -263,26 +263,69 @@ export function wrapTextareaLines(
   };
 }
 
+function buildMarkdownTable(rows: number, cols: number): string {
+  const safeRows = Math.max(2, rows);
+  const safeCols = Math.max(2, cols);
+  const emptyRow = `| ${Array.from({ length: safeCols }, () => '').join(' | ')} |`;
+  const delimiter = `| ${Array.from({ length: safeCols }, () => '---').join(' | ')} |`;
+  const body = Array.from({ length: safeRows - 1 }, () => emptyRow).join('\n');
+
+  return `${emptyRow}\n${delimiter}\n${body}`;
+}
+
+function getTableInsertionAffixes(value: string, selection: SelectionPos): {
+  prefix: string;
+  suffix: string;
+} {
+  const { start } = selection;
+  const suffix = '\n\n\n';
+
+  if (start === 0) {
+    return { prefix: '', suffix };
+  }
+
+  const { start: lineStart } = getLineBounds(value, start);
+  const atLineStart = start === lineStart;
+
+  if (!atLineStart) {
+    return { prefix: '\n\n', suffix };
+  }
+
+  const previousLineEnd = lineStart - 1;
+  if (previousLineEnd < 0) {
+    return { prefix: '', suffix };
+  }
+
+  const previousLineStart = value.lastIndexOf('\n', previousLineEnd - 1) + 1;
+  const previousLine = value.slice(previousLineStart, previousLineEnd);
+
+  if (!previousLine.trim()) {
+    return { prefix: '', suffix };
+  }
+
+  return { prefix: '\n', suffix };
+}
+
 export function insertMarkdownTable(
   value: string,
   selection: SelectionPos,
   rows = 3,
   cols = 3
 ): TextareaEditResult {
-  const safeRows = Math.max(2, rows);
-  const safeCols = Math.max(2, cols);
-  const header = `| ${Array.from({ length: safeCols }, (_, index) => `Header ${index + 1}`).join(' | ')} |`;
-  const delimiter = `| ${Array.from({ length: safeCols }, () => '---').join(' | ')} |`;
-  const body = Array.from({ length: safeRows - 1 }, (_, rowIndex) => {
-    const cells = Array.from(
-      { length: safeCols },
-      (_, colIndex) => `Cell ${rowIndex + 1}-${colIndex + 1}`
-    );
-    return `| ${cells.join(' | ')} |`;
-  }).join('\n');
-  const table = `\n\n${header}\n${delimiter}\n${body}\n\n`;
+  const table = buildMarkdownTable(rows, cols);
+  const { prefix, suffix } = getTableInsertionAffixes(value, selection);
+  const insert = `${prefix}${table}${suffix}`;
+  const { start, end } = selection;
+  const nextValue = value.slice(0, start) + insert + value.slice(end);
+  const cursor = start + prefix.length + 2;
 
-  return insertTextareaAtSelection(value, selection, table);
+  return {
+    value: nextValue,
+    selection: {
+      start: cursor,
+      end: cursor,
+    },
+  };
 }
 
 export function insertTaskListPrefix(

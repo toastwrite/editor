@@ -66,7 +66,11 @@ describe('commands', () => {
     editor.setSelection({ start: 5, end: 5 });
     tableButton.click();
 
-    expect(editor.getMarkdown()).toContain('| Header 1 | Header 2 | Header 3 |');
+    const popup = container.querySelector('.toastwrite-editor-table-popup') as HTMLElement;
+    const cell = popup.querySelector('[data-row="3"][data-col="3"]') as HTMLButtonElement;
+    cell.click();
+
+    expect(editor.getMarkdown()).toContain('|  |  |  |');
 
     editor.destroy();
   });

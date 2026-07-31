@@ -62,6 +62,7 @@ export class Editor {
         onInsertLink: (url, linkText) => this.markdownMode.insertLink(url, linkText),
         getImagePopupInitialValues: () => this.markdownMode.getImagePopupInitialValues(),
         onInsertImage: (url, altText) => this.markdownMode.insertImage(url, altText),
+        onInsertTable: (rows, cols) => this.markdownMode.insertTable(rows, cols),
       });
     }
 

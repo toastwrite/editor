@@ -23,6 +23,7 @@ export interface ToolbarOptions {
   onCommand: (commandId: CommandId) => void;
   onLinkClick?: (trigger: HTMLButtonElement) => void;
   onImageClick?: (trigger: HTMLButtonElement) => void;
+  onTableClick?: (trigger: HTMLButtonElement) => void;
   canExecute?: (commandId: CommandId) => boolean;
   headingDropdown?: boolean;
   scrollSync?: ToolbarScrollSyncOptions;
@@ -62,6 +63,7 @@ function createCommandButton(
   onCommand: (commandId: CommandId) => void,
   onLinkClick: ((trigger: HTMLButtonElement) => void) | undefined,
   onImageClick: ((trigger: HTMLButtonElement) => void) | undefined,
+  onTableClick: ((trigger: HTMLButtonElement) => void) | undefined,
   canExecute: (commandId: CommandId) => boolean
 ): { item: HTMLElement; button: HTMLButtonElement } {
   const button = document.createElement('button');
@@ -89,6 +91,11 @@ function createCommandButton(
       return;
     }
 
+    if (command.id === 'table' && onTableClick) {
+      onTableClick(button);
+      return;
+    }
+
     onCommand(command.id);
   });
 
@@ -102,6 +109,7 @@ export function createToolbar({
   onCommand,
   onLinkClick,
   onImageClick,
+  onTableClick,
   canExecute = () => true,
   headingDropdown = false,
   scrollSync,
@@ -150,6 +158,7 @@ export function createToolbar({
         onCommand,
         onLinkClick,
         onImageClick,
+        onTableClick,
         canExecute
       );
       buttons.set(command.id, button);

@@ -690,6 +690,84 @@
   color: #f3f4f6;
 }
 
+.toastwrite-editor-table-popup {
+  --toastwrite-editor-table-cell-size: 16px;
+  position: absolute;
+  z-index: 40;
+  padding: 12px 14px 10px;
+  border: 1px solid #dadde6;
+  border-radius: 2px;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.toastwrite-editor-table-popup-grid {
+  display: grid;
+  gap: 2px;
+}
+
+.toastwrite-editor-table-popup-cell {
+  width: var(--toastwrite-editor-table-cell-size);
+  height: var(--toastwrite-editor-table-cell-size);
+  padding: 0;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  cursor: pointer;
+}
+
+.toastwrite-editor-table-popup-cell:hover,
+.toastwrite-editor-table-popup-cell.is-selected {
+  background: #d6ebff;
+}
+
+.toastwrite-editor-table-popup-cell.is-selection-top {
+  border-top-color: #4b96e6;
+  border-top-width: 2px;
+}
+
+.toastwrite-editor-table-popup-cell.is-selection-bottom {
+  border-bottom-color: #4b96e6;
+  border-bottom-width: 2px;
+}
+
+.toastwrite-editor-table-popup-cell.is-selection-left {
+  border-left-color: #4b96e6;
+  border-left-width: 2px;
+}
+
+.toastwrite-editor-table-popup-cell.is-selection-right {
+  border-right-color: #4b96e6;
+  border-right-width: 2px;
+}
+
+.toastwrite-editor-table-popup-label {
+  margin-top: 10px;
+  font-size: 12px;
+  line-height: 1.4;
+  text-align: center;
+  color: #555;
+}
+
+.toastwrite-editor-theme-dark .toastwrite-editor-table-popup {
+  border-color: #374151;
+  background: #111827;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+}
+
+.toastwrite-editor-theme-dark .toastwrite-editor-table-popup-cell {
+  border-color: #374151;
+  background: #1f2937;
+}
+
+.toastwrite-editor-theme-dark .toastwrite-editor-table-popup-cell:hover,
+.toastwrite-editor-theme-dark .toastwrite-editor-table-popup-cell.is-selected {
+  background: rgba(75, 150, 230, 0.25);
+}
+
+.toastwrite-editor-theme-dark .toastwrite-editor-table-popup-label {
+  color: #d1d5db;
+}
+
 .toastwrite-editor-body {
   flex: 1;
   min-height: 0;

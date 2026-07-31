@@ -2,6 +2,7 @@ import { EditorState } from 'prosemirror-state';
 import type { EditorView } from 'prosemirror-view';
 import { insertMarkdownLink, getLinkPopupInitialValues } from '../commands/link-helpers.js';
 import { insertMarkdownImage, getImagePopupInitialValues } from '../commands/image-helpers.js';
+import { insertMarkdownTable } from '../commands/markdown-helpers.js';
 import { executeMarkdownCommand } from '../commands/markdown-commands.js';
 import type { CommandId } from '../commands/types.js';
 import type { EditResult } from '@toastwrite/parser';
@@ -208,6 +209,23 @@ export class MarkdownMode implements EditorMode {
     return true;
   }
 
+  insertTable(rows: number, cols: number): boolean {
+    if (!this.view) {
+      return false;
+    }
+
+    this.focus();
+    const markdown = docToMarkdown(this.view.state.doc);
+    const selection = this.getSelection();
+    const result = insertMarkdownTable(markdown, selection, rows, cols);
+
+    this.view.dispatch(replaceDocumentFromMarkdown(this.view.state.tr, result.value, result.selection));
+    this.syncToContext();
+    this.context.events.emit('change');
+    this.renderPreview();
+    return true;
+  }
+
   getImagePopupInitialValues() {
     if (!this.view) {
       return { url: '', altText: '', altTextDisabled: false };
@@ -221,7 +239,8 @@ export class MarkdownMode implements EditorMode {
       commandId === 'scrollSync' ||
       commandId === 'heading' ||
       commandId === 'link' ||
-      commandId === 'image'
+      commandId === 'image' ||
+      commandId === 'table'
     ) {
       return false;
     }
