@@ -14,7 +14,7 @@ export interface EditResult {
 type EventName = 'change';
 
 type EventHandlerMap = {
-  [key in EventName]: (() => void)[];
+  [key in EventName]: ((result: EditResult[]) => void)[];
 };
 
 export class ToastMark {
@@ -32,9 +32,9 @@ export class ToastMark {
 
   findFirstNodeAtLine(line: number): MdNode | null;
 
-  on(eventName: EventName, callback: () => void): void;
+  on(eventName: EventName, callback: (result: EditResult[]) => void): void;
 
-  off(eventName: EventName, callback: () => void): void;
+  off(eventName: EventName, callback: (result: EditResult[]) => void): void;
 
   findNodeById(id: number): MdNode | null;
 

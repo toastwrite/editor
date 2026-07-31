@@ -165,7 +165,7 @@ export class ToastMark implements ToastMarkParser {
     return [startNode, endNode] as [BlockNode, BlockNode];
   }
 
-  private trigger(eventName: EventName, param: any) {
+  private trigger(eventName: EventName, param: EditResult[]) {
     this.eventHandlerMap[eventName].forEach((handler) => {
       handler(param);
     });
@@ -245,7 +245,7 @@ export class ToastMark implements ToastMarkParser {
 
   private markDeletedRefMap(extStartNode: BlockNode | null, extEndNode: BlockNode | null) {
     if (!isEmptyObj(this.refMap)) {
-      const markDeleted = (node: BlockNode) => {
+      const markDeleted = (node: Node) => {
         if (isRefDef(node)) {
           const refDefState = this.refMap[node.label];
           if (refDefState && node.id === refDefState.id) {
@@ -264,7 +264,7 @@ export class ToastMark implements ToastMarkParser {
 
   private replaceWithNewRefDefState(nodes: BlockNode[]) {
     if (!isEmptyObj(this.refMap)) {
-      const replaceWith = (node: BlockNode) => {
+      const replaceWith = (node: Node) => {
         if (isRefDef(node)) {
           const { label } = node;
           const refDefState = this.refMap[label];
@@ -421,11 +421,11 @@ export class ToastMark implements ToastMarkParser {
     return findFirstNodeAtLine(this.root, line);
   }
 
-  on(eventName: EventName, callback: () => void) {
+  on(eventName: EventName, callback: (result: EditResult[]) => void) {
     this.eventHandlerMap[eventName].push(callback);
   }
 
-  off(eventName: EventName, callback: () => void) {
+  off(eventName: EventName, callback: (result: EditResult[]) => void) {
     const handlers = this.eventHandlerMap[eventName];
     const idx = handlers.indexOf(callback);
     handlers.splice(idx, 1);
