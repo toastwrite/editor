@@ -1,6 +1,6 @@
 {
   "extends": "../../tsconfig.base.json",
-  "include": ["src/**/*.ts", "types/**/*"],
+  "include": ["src/**/*.ts", "types/**/*", "vitest-globals.d.ts"],
   "compilerOptions": {
     "paths": {
       "@t/*": ["${configDir}/types/*"]

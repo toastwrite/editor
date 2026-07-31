@@ -48,6 +48,7 @@
   },
   "devDependencies": {
     "@types/codemirror": "5.60.5",
+    "@types/common-tags": "^1.8.4",
     "codemirror": "^5.65.16",
     "common-tags": "^1.8.2",
     "vite": "^6.3.5",

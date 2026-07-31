@@ -95,6 +95,9 @@ importers:
       '@types/codemirror':
         specifier: 5.60.5
         version: 5.60.5
+      '@types/common-tags':
+        specifier: ^1.8.4
+        version: 1.8.4
       codemirror:
         specifier: ^5.65.16
         version: 5.65.21
@@ -557,6 +560,9 @@ packages:
 
   '@types/codemirror@5.60.5':
     resolution: {integrity: sha512-TiECZmm8St5YxjFUp64LK0c8WU5bxMDt9YaAek1UqUb9swrSCoJhh92fWu1p3mTEqlHjhB5sY7OFBhWroJXZVg==}
+
+  '@types/common-tags@1.8.4':
+    resolution: {integrity: sha512-S+1hLDJPjWNDhcGxsxEbepzaxWqURP/o+3cP4aa2w7yBXgdcmKGQtZzP8JbyfOd0m+33nh+8+kvxYE2UJtBDkg==}
 
   '@types/deep-eql@4.0.2':
     resolution: {integrity: sha512-c9h9dVVMigMPc4bwTvC5dxqtqJZwQPePsWjPlpSOnojbor6pGqdk541lfA7AqFQr5pB1BRdq0juY9db81BwyFw==}
@@ -1631,6 +1637,8 @@ snapshots:
   '@types/codemirror@5.60.5':
     dependencies:
       '@types/tern': 0.23.9
+
+  '@types/common-tags@1.8.4': {}
 
   '@types/deep-eql@4.0.2': {}
 
