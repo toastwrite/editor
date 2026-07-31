@@ -10,7 +10,8 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@toastwrite/editor": "workspace:*"
+    "@toastwrite/editor": "workspace:*",
+    "@toastwrite/parser": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^5.8.3",
