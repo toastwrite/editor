@@ -293,6 +293,12 @@ function highlightLinks(ranges: HighlightRange[], lineStart: number, line: strin
     addRange(
       ranges,
       start + bang.length + 2 + desc.length,
+      start + bang.length + 3 + desc.length,
+      schema.marks.link.create()
+    );
+    addRange(
+      ranges,
+      start + bang.length + 3 + desc.length,
       start + full.length - 1,
       schema.marks.link.create({ url: true })
     );

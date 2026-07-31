@@ -85,6 +85,19 @@ describe('markdown syntax highlight', () => {
     expect(html).toContain('toastwrite-editor-md-html-attr-value');
   });
 
+  it('styles link parentheses as delimiters, not as url text', () => {
+    const doc = markdownToDoc('![Toastwrite Editor](https://example.com/x.png)');
+    const state = EditorState.create({ doc, schema });
+    const tr = applySyntaxHighlight(state);
+    const nextState = state.apply(tr!);
+    const html = serializeDoc(nextState);
+
+    expect(html).toContain(
+      '<span class="toastwrite-editor-md-link">](</span><span class="toastwrite-editor-md-link toastwrite-editor-md-link-url toastwrite-editor-md-marked-text">https://example.com/x.png</span><span class="toastwrite-editor-md-link">)</span>'
+    );
+    expect(html).not.toMatch(/toastwrite-editor-md-link-url[^"]*">\(/);
+  });
+
   it('does not highlight html inside inline code', () => {
     const doc = markdownToDoc('Use `<div>` in markdown');
     const state = EditorState.create({ doc, schema });
