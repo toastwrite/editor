@@ -1,7 +1,7 @@
 import { Parser } from '../../blocks';
 import { Renderer } from '../../../html/renderer';
 import { convertToArrayTree } from '../../__test__/helper.spec';
-import { BlockNode, TableNode } from 'src/commonmark/node';
+import { BlockNode, TableNode } from '../../node';
 import { source } from 'common-tags';
 
 const reader = new Parser();
