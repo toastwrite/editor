@@ -474,6 +474,222 @@
   color: #f3f4f6;
 }
 
+.toastwrite-editor-image-popup {
+  position: absolute;
+  z-index: 40;
+  width: min(400px, calc(100% - 24px));
+  border: 1px solid #dadde6;
+  border-radius: 2px;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.toastwrite-editor-image-popup-body {
+  padding: 0 20px 20px;
+  font-size: 12px;
+}
+
+.toastwrite-editor-image-popup-tabs {
+  display: flex;
+  margin: 5px 0 10px;
+}
+
+.toastwrite-editor-image-popup-tab {
+  width: 60px;
+  height: 40px;
+  border: 0;
+  border-bottom: 1px solid #dadde6;
+  background: transparent;
+  color: #333;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.toastwrite-editor-image-popup-tab:hover {
+  border-bottom-color: #cbcfdb;
+}
+
+.toastwrite-editor-image-popup-tab.active {
+  color: #00a9ff;
+  border-bottom: 2px solid #00a9ff;
+}
+
+.toastwrite-editor-image-popup-label {
+  display: block;
+  margin: 20px 0 5px;
+  font-weight: 600;
+  color: #555;
+}
+
+.toastwrite-editor-image-popup-input {
+  width: 100%;
+  height: 30px;
+  padding: 0 12px;
+  border: 1px solid #e1e3e9;
+  border-radius: 2px;
+  color: #333;
+  font: inherit;
+  box-sizing: border-box;
+}
+
+.toastwrite-editor-image-popup-input:focus {
+  outline: 1px solid #00a9ff;
+  border-color: transparent;
+}
+
+.toastwrite-editor-image-popup-input.is-disabled,
+.toastwrite-editor-image-popup-input:disabled {
+  background-color: #f7f9fc;
+  border-color: #e1e3e9;
+  color: #969aa5;
+}
+
+.toastwrite-editor-image-popup-input.is-invalid {
+  border-color: #fa2828;
+}
+
+.toastwrite-editor-image-popup-file-row {
+  position: relative;
+  display: flex;
+  gap: 5px;
+}
+
+.toastwrite-editor-image-popup-file-name {
+  flex: 1;
+  min-width: 0;
+  height: 30px;
+  padding: 0 12px;
+  border: 1px solid #e1e3e9;
+  border-radius: 2px;
+  color: #dadde6;
+  line-height: 30px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.toastwrite-editor-image-popup-file-name.has-file {
+  color: #333;
+}
+
+.toastwrite-editor-image-popup-file-name.is-invalid {
+  border-color: #fa2828;
+}
+
+.toastwrite-editor-image-popup-file-button {
+  width: 33%;
+  min-width: 110px;
+  height: 32px;
+  border: 1px solid #dadde6;
+  border-radius: 2px;
+  background: #f7f9fc;
+  color: #333;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.toastwrite-editor-image-popup-file-button:hover {
+  border-color: #cbcfdb;
+}
+
+.toastwrite-editor-image-popup-file-input {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.toastwrite-editor-image-popup-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 5px;
+  margin-top: 20px;
+}
+
+.toastwrite-editor-image-popup-button {
+  min-width: 63px;
+  height: 32px;
+  border-radius: 2px;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.toastwrite-editor-image-popup-cancel {
+  border: 1px solid #dadde6;
+  background: #f7f9fc;
+  color: #333;
+}
+
+.toastwrite-editor-image-popup-cancel:hover {
+  border-color: #cbcfdb;
+}
+
+.toastwrite-editor-image-popup-ok {
+  border: 0;
+  background: #00a9ff;
+  color: #fff;
+}
+
+.toastwrite-editor-image-popup-ok:hover {
+  background: #009bf2;
+}
+
+.toastwrite-editor-theme-dark .toastwrite-editor-image-popup {
+  background: #1f2937;
+  border-color: #374151;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.toastwrite-editor-theme-dark .toastwrite-editor-image-popup-tab {
+  color: #d1d5db;
+  border-bottom-color: #374151;
+}
+
+.toastwrite-editor-theme-dark .toastwrite-editor-image-popup-tab.active {
+  color: #38bdf8;
+  border-bottom-color: #38bdf8;
+}
+
+.toastwrite-editor-theme-dark .toastwrite-editor-image-popup-label {
+  color: #d1d5db;
+}
+
+.toastwrite-editor-theme-dark .toastwrite-editor-image-popup-input {
+  background: #111827;
+  border-color: #4b5563;
+  color: #f3f4f6;
+}
+
+.toastwrite-editor-theme-dark .toastwrite-editor-image-popup-input.is-disabled,
+.toastwrite-editor-theme-dark .toastwrite-editor-image-popup-input:disabled {
+  background: #374151;
+  color: #9ca3af;
+}
+
+.toastwrite-editor-theme-dark .toastwrite-editor-image-popup-file-name {
+  background: #111827;
+  border-color: #4b5563;
+  color: #6b7280;
+}
+
+.toastwrite-editor-theme-dark .toastwrite-editor-image-popup-file-name.has-file {
+  color: #f3f4f6;
+}
+
+.toastwrite-editor-theme-dark .toastwrite-editor-image-popup-file-button,
+.toastwrite-editor-theme-dark .toastwrite-editor-image-popup-cancel {
+  background: #374151;
+  border-color: #4b5563;
+  color: #f3f4f6;
+}
+
 .toastwrite-editor-body {
   flex: 1;
   min-height: 0;

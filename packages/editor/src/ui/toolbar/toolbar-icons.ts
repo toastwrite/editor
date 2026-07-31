@@ -1,6 +1,7 @@
 import type { CommandId } from '../../commands/types.js';
 import boldSvg from './assets/bold.svg?raw';
 import codeSvg from './assets/code.svg?raw';
+import imageSvg from './assets/image.svg?raw';
 import linkSvg from './assets/link.svg?raw';
 import tableSvg from './assets/table.svg?raw';
 import blockquoteSvg from './assets/blockquote.svg?raw';
@@ -94,6 +95,7 @@ const ICON_RENDERERS: Partial<Record<CommandId, IconRenderer>> = {
   orderedList: () => createSvgFromAsset(orderedListSvg),
   taskList: () => createSvgFromAsset(checkboxSvg),
   link: () => createSvgFromAsset(linkSvg),
+  image: () => createSvgFromAsset(imageSvg),
   table: () => createSvgFromAsset(tableSvg),
 };
 

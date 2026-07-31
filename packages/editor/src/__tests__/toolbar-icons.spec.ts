@@ -11,6 +11,7 @@ const SVG_ASSET_COMMANDS = [
   'italic',
   'code',
   'link',
+  'image',
   'table',
   'blockquote',
   'strike',

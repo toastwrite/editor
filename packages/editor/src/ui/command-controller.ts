@@ -1,8 +1,10 @@
 import { BUILTIN_COMMANDS, resolveToolbarConfig } from '../commands/builtins.js';
 import { matchKeyboardShortcut } from '../commands/keyboard.js';
 import type { LinkPopupInitialValues } from '../commands/link-helpers.js';
+import type { ImagePopupInitialValues } from '../commands/image-helpers.js';
 import type { CommandId } from '../commands/types.js';
 import type { PreviewStyle } from '../types.js';
+import { createImagePopup } from './toolbar/create-image-popup.js';
 import { createLinkPopup } from './toolbar/create-link-popup.js';
 import { createToolbar } from './toolbar/create-toolbar.js';
 
@@ -18,6 +20,8 @@ export interface CommandControllerOptions {
   setScrollSyncEnabled: (enabled: boolean) => void;
   getLinkPopupInitialValues: () => LinkPopupInitialValues;
   onInsertLink: (url: string, linkText: string) => boolean;
+  getImagePopupInitialValues: () => ImagePopupInitialValues;
+  onInsertImage: (url: string, altText: string) => boolean;
 }
 
 export interface CommandController {
@@ -36,10 +40,13 @@ export function createCommandController({
   setScrollSyncEnabled,
   getLinkPopupInitialValues,
   onInsertLink,
+  getImagePopupInitialValues,
+  onInsertImage,
 }: CommandControllerOptions): CommandController {
   const { commands, showScrollSync, showHeadingDropdown } = resolveToolbarConfig(toolbarItems);
 
   let linkPopup: ReturnType<typeof createLinkPopup>;
+  let imagePopup: ReturnType<typeof createImagePopup>;
 
   const toolbar = createToolbar({
     mount: toolbarEl,
@@ -49,6 +56,9 @@ export function createCommandController({
     },
     onLinkClick: (trigger) => {
       linkPopup.open(trigger, getLinkPopupInitialValues());
+    },
+    onImageClick: (trigger) => {
+      imagePopup.open(trigger, getImagePopupInitialValues());
     },
     canExecute,
     headingDropdown: showHeadingDropdown,
@@ -69,8 +79,15 @@ export function createCommandController({
     },
   });
 
+  imagePopup = createImagePopup({
+    mount: toolbarEl,
+    onSubmit: ({ url, altText }) => {
+      onInsertImage(url, altText);
+    },
+  });
+
   const onShortcut = (event: KeyboardEvent): void => {
-    if (linkPopup.isOpen()) {
+    if (linkPopup.isOpen() || imagePopup.isOpen()) {
       return;
     }
 
@@ -105,6 +122,7 @@ export function createCommandController({
       rootEl.removeEventListener('keydown', onShortcut);
       toolbar.destroy();
       linkPopup.destroy();
+      imagePopup.destroy();
     },
   };
 }

@@ -60,6 +60,8 @@ export class Editor {
         setScrollSyncEnabled: (enabled) => this.markdownMode.setScrollSyncEnabled(enabled),
         getLinkPopupInitialValues: () => this.markdownMode.getLinkPopupInitialValues(),
         onInsertLink: (url, linkText) => this.markdownMode.insertLink(url, linkText),
+        getImagePopupInitialValues: () => this.markdownMode.getImagePopupInitialValues(),
+        onInsertImage: (url, altText) => this.markdownMode.insertImage(url, altText),
       });
     }
 

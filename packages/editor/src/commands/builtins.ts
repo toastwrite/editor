@@ -12,6 +12,7 @@ export const DEFAULT_TOOLBAR_ITEMS: CommandId[] = [
   'bulletList',
   'taskList',
   'table',
+  'image',
   'link',
   'code',
   'codeBlock',
@@ -106,6 +107,11 @@ export const BUILTIN_COMMANDS: EditorCommandDefinition[] = [
     label: 'Table',
     group: 'Insert',
     shortcut: 'Mod-Alt-t',
+  },
+  {
+    id: 'image',
+    label: 'Insert image',
+    group: 'Insert',
   },
   {
     id: 'link',

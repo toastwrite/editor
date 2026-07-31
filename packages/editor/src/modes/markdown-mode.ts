@@ -1,6 +1,7 @@
 import { EditorState } from 'prosemirror-state';
 import type { EditorView } from 'prosemirror-view';
 import { insertMarkdownLink, getLinkPopupInitialValues } from '../commands/link-helpers.js';
+import { insertMarkdownImage, getImagePopupInitialValues } from '../commands/image-helpers.js';
 import { executeMarkdownCommand } from '../commands/markdown-commands.js';
 import type { CommandId } from '../commands/types.js';
 import type { EditResult } from '@toastwrite/parser';
@@ -190,8 +191,38 @@ export class MarkdownMode implements EditorMode {
     return getLinkPopupInitialValues(docToMarkdown(this.view.state.doc), this.getSelection());
   }
 
+  insertImage(url: string, altText: string): boolean {
+    if (!this.view) {
+      return false;
+    }
+
+    this.focus();
+    const markdown = docToMarkdown(this.view.state.doc);
+    const selection = this.getSelection();
+    const result = insertMarkdownImage(markdown, selection, { url, altText });
+
+    this.view.dispatch(replaceDocumentFromMarkdown(this.view.state.tr, result.value, result.selection));
+    this.syncToContext();
+    this.context.events.emit('change');
+    this.renderPreview();
+    return true;
+  }
+
+  getImagePopupInitialValues() {
+    if (!this.view) {
+      return { url: '', altText: '', altTextDisabled: false };
+    }
+
+    return getImagePopupInitialValues(docToMarkdown(this.view.state.doc), this.getSelection());
+  }
+
   executeCommand(commandId: CommandId): boolean {
-    if (commandId === 'scrollSync' || commandId === 'heading' || commandId === 'link') {
+    if (
+      commandId === 'scrollSync' ||
+      commandId === 'heading' ||
+      commandId === 'link' ||
+      commandId === 'image'
+    ) {
       return false;
     }
 
@@ -265,6 +296,12 @@ export class MarkdownMode implements EditorMode {
       return [];
     }
 
+    if (newMarkdown === '') {
+      this.context.content.setMarkdown(newMarkdown);
+      this.renderPreview();
+      return [];
+    }
+
     const editResults = collectTransactionEditResults(this.context.content, tr);
 
     if (editResults.length === 0) {
@@ -273,7 +310,10 @@ export class MarkdownMode implements EditorMode {
       return [];
     }
 
-    this.context.updatePreview(this.previewEl, editResults);
+    const updateMode = this.context.updatePreview(this.previewEl, editResults);
+    if (updateMode === 'partial' && this.context.getMarkdown() === '') {
+      this.renderPreview();
+    }
     return editResults;
   }
 

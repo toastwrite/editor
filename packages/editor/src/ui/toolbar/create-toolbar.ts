@@ -22,6 +22,7 @@ export interface ToolbarOptions {
   commands: EditorCommandDefinition[];
   onCommand: (commandId: CommandId) => void;
   onLinkClick?: (trigger: HTMLButtonElement) => void;
+  onImageClick?: (trigger: HTMLButtonElement) => void;
   canExecute?: (commandId: CommandId) => boolean;
   headingDropdown?: boolean;
   scrollSync?: ToolbarScrollSyncOptions;
@@ -37,7 +38,7 @@ const TOOLBAR_GROUP_ITEM_ORDER: Partial<Record<EditorCommandDefinition['group'],
   Text: ['bold', 'italic', 'strike'],
   Structure: ['hr', 'blockquote'],
   Lists: ['orderedList', 'bulletList', 'taskList'],
-  Insert: ['table', 'link'],
+  Insert: ['table', 'image', 'link'],
   Code: ['code', 'codeBlock'],
 };
 
@@ -60,6 +61,7 @@ function createCommandButton(
   command: EditorCommandDefinition,
   onCommand: (commandId: CommandId) => void,
   onLinkClick: ((trigger: HTMLButtonElement) => void) | undefined,
+  onImageClick: ((trigger: HTMLButtonElement) => void) | undefined,
   canExecute: (commandId: CommandId) => boolean
 ): { item: HTMLElement; button: HTMLButtonElement } {
   const button = document.createElement('button');
@@ -82,6 +84,11 @@ function createCommandButton(
       return;
     }
 
+    if (command.id === 'image' && onImageClick) {
+      onImageClick(button);
+      return;
+    }
+
     onCommand(command.id);
   });
 
@@ -94,6 +101,7 @@ export function createToolbar({
   commands,
   onCommand,
   onLinkClick,
+  onImageClick,
   canExecute = () => true,
   headingDropdown = false,
   scrollSync,
@@ -137,7 +145,13 @@ export function createToolbar({
     }
 
     groupCommands.forEach((command) => {
-      const { item, button } = createCommandButton(command, onCommand, onLinkClick, canExecute);
+      const { item, button } = createCommandButton(
+        command,
+        onCommand,
+        onLinkClick,
+        onImageClick,
+        canExecute
+      );
       buttons.set(command.id, button);
       group.appendChild(item);
     });

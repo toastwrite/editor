@@ -17,6 +17,7 @@ export type CommandId =
   | 'blockquote'
   | 'hr'
   | 'link'
+  | 'image'
   | 'table'
   | 'scrollSync';
 

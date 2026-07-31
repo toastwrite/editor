@@ -44,6 +44,10 @@ export function patchPreviewDom(
     const newHtml = nodes.map((node) => renderNodeHtml(node)).join('');
 
     if (!removedNodeRange) {
+      if (nodes.length === 0) {
+        return false;
+      }
+
       previewEl.insertAdjacentHTML('afterbegin', newHtml);
       continue;
     }
