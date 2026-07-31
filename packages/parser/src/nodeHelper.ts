@@ -214,7 +214,7 @@ export function findNodeById(id: number) {
   return getNodeById(id) || null;
 }
 
-export function invokeNextUntil(callback: Function, start: Node | null, end: Node | null = null) {
+export function invokeNextUntil(callback: (node: Node) => void, start: Node | null, end: Node | null = null) {
   if (start) {
     const walker = start.walker();
     while (start && start !== end) {
@@ -237,7 +237,7 @@ export function isUnlinked(id: number) {
   }
 
   while (node && node.type !== 'document') {
-    // eslint-disable-next-line no-loop-func
+     
     if (!node.parent && !node.prev && !node.next) {
       return true;
     }

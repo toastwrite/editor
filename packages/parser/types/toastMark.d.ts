@@ -14,7 +14,7 @@ export interface EditResult {
 type EventName = 'change';
 
 type EventHandlerMap = {
-  [key in EventName]: Function[];
+  [key in EventName]: (() => void)[];
 };
 
 export class ToastMark {

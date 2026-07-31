@@ -10,8 +10,6 @@ import {
 import { escapeXml } from '../commonmark/common';
 import { filterDisallowedTags } from './tagFilter';
 
-const CUSTOM_SYNTAX_LENGTH = 4;
-
 export const baseConvertors: HTMLConvertorMap = {
   heading(node, { entering }) {
     return {

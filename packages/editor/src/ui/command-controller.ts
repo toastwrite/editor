@@ -45,7 +45,10 @@ export function createCommandController({
 }: CommandControllerOptions): CommandController {
   const { commands, showScrollSync, showHeadingDropdown } = resolveToolbarConfig(toolbarItems);
 
+  // Popups are created after the toolbar because createToolbar clears its mount node.
+  // eslint-disable-next-line prefer-const -- assigned after toolbar initialization
   let linkPopup: ReturnType<typeof createLinkPopup>;
+  // eslint-disable-next-line prefer-const -- assigned after toolbar initialization
   let imagePopup: ReturnType<typeof createImagePopup>;
 
   const toolbar = createToolbar({

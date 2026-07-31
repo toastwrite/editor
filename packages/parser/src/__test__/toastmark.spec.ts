@@ -10,7 +10,7 @@ function removeIdAttrFromAllNode(root: Node) {
   while ((event = walker.next())) {
     const { entering, node } = event;
     if (entering) {
-      // @ts-ignore
+      // @ts-expect-error test helper removes internal id attribute
       delete node.id;
     }
   }

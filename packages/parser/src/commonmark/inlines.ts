@@ -1131,7 +1131,9 @@ export class InlineParser {
       this.lineOffsets[0] += block.level + 1;
     }
 
-    while (this.parseInline(block)) {}
+    while (this.parseInline(block)) {
+      // continue until inline content is exhausted
+    }
     block.stringContent = null; // allow raw string to be garbage collected
     this.processEmphasis(null);
     this.mergeTextNodes(block.walker());

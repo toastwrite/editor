@@ -425,7 +425,7 @@ export class ToastMark implements ToastMarkParser {
     this.eventHandlerMap[eventName].push(callback);
   }
 
-  off(eventName: EventName, callback: Function) {
+  off(eventName: EventName, callback: () => void) {
     const handlers = this.eventHandlerMap[eventName];
     const idx = handlers.indexOf(callback);
     handlers.splice(idx, 1);

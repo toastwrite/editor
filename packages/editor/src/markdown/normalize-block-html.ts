@@ -125,7 +125,7 @@ function extractBalancedTag(source: string, tagName: string): string | null {
   }
 
   let depth = 0;
-  let cursor = 0;
+  const cursor = 0;
   const tagPattern = new RegExp(`<(\\/?)(${tagName})(?:\\s[^>]*)?>`, 'gi');
   let match: RegExpExecArray | null;
 

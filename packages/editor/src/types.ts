@@ -51,7 +51,7 @@ export interface EditorOptions extends BaseEditorOptions {
   beforePreviewRender?: (html: string) => string;
 }
 
-export interface ViewerOptions extends BaseEditorOptions {}
+export type ViewerOptions = BaseEditorOptions;
 
 export interface SelectionPos {
   start: number;

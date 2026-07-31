@@ -27,7 +27,7 @@ export function unescapeString(s: string) {
 export function normalizeURI(uri: string) {
   try {
     return encode(uri);
-  } catch (err) {
+  } catch {
     return uri;
   }
 }
