@@ -3,6 +3,7 @@ import { resolve } from 'node:path';
 
 export default defineConfig({
   build: {
+    emptyOutDir: false,
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
       name: 'ToastwriteEditor',
@@ -12,6 +13,7 @@ export default defineConfig({
     rollupOptions: {
       external: [/^@toastwrite\/parser/, 'dompurify', /^prosemirror/],
       output: {
+        exports: 'named',
         assetFileNames: 'toastwrite-editor[extname]',
       },
     },

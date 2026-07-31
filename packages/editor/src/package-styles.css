@@ -1,0 +1,3 @@
+@import './styles/editor.css';
+@import './styles/md-syntax-highlighting.css';
+@import 'prosemirror-view/style/prosemirror.css';
