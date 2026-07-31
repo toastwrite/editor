@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { TextSelection } from 'prosemirror-state';
+import type { EditResult } from '@toastwrite/parser';
 import { EditorContext } from '../core/editor-context.js';
 import { createMarkdownView } from '../markdown/create-markdown-view.js';
 import { markdownToDoc } from '../markdown/doc-bridge.js';
@@ -66,13 +67,13 @@ describe('preview incremental updates for large documents', () => {
     const mode = new MarkdownMode(context, 'vertical');
     (mode as unknown as { previewEl: HTMLElement }).previewEl = previewEl;
 
-    let capturedEditResults: unknown;
+    let capturedEditResults: EditResult[] | undefined;
     const view = createMarkdownView({
       mount,
       doc: markdownToDoc(initialMarkdown),
       onDocumentEdit: (change) => {
         const editResults = (
-          mode as unknown as { handleDocumentEdit: (value: typeof change) => unknown[] }
+          mode as unknown as { handleDocumentEdit: (value: typeof change) => EditResult[] }
         ).handleDocumentEdit(change);
         capturedEditResults = editResults;
         return editResults;
